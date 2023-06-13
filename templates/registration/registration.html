@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section>
+    <h2 class="text-center pt-2">Create new account</h2>
+
+    <section class="w-500 d-flex justify-content-center ">
+        <div class="bg-white " >
+            <div class="container">
+                {% if user_form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Error!</strong> {{user_form.errors}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+      <form style="width: 40%;" method="post" class="pt-2" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-floating mb-1">
+          <input type="text" id="username" name="username" class="form-control" placeholder="Username"
+                 value="{{ user_form.username.value }}" required>
+            <label for="username">Username*</label>
+        </div>
+
+
+        <div class="form-floating mb-1 ">
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email address"
+                   value="{{ user_form.email.value }}" required>
+            <label for="email">Email address*</label>
+        </div>
+
+        <div class="form-floating mb-1">
+            <input type="text" id="name" name="first_name" class="form-control" placeholder="Your name"
+                   value="{{ user_form.first_name.value }}" required>
+            <label for="name">Your name*</label>
+        </div>
+
+        <div class="form-floating mb-1">
+            <input type="text" id="surname" name="last_name" class="form-control" placeholder="Your surname*"
+                   value="{{ user_form.last_name.value }}" required>
+            <label for="surname">Your surname*</label>
+        </div>
+
+        <div class="form-floating mb-1">
+          <input type="password" id="password1" name="password1" class="form-control" placeholder="Password*" required>
+            <label for="password1">Password*</label>
+        </div>
+
+        <div class="form-floating mb-1">
+            <input type="password" id="password2" name="password2" class="form-control"
+                   placeholder="Repeat your password*" required>
+            <label for="password2">Repeat your password*</label>
+        </div>
+
+
+        <div class="form-floating mt-3">
+            <p class="text-center">Additional information (optional)</p>
+        </div>
+
+
+        <div class="form-floating mb-1">
+            <input type="text" id="country" name="country" class="form-control" placeholder="Country"
+            value="{{ user_form.country.value }}">
+            <label for="country">Country</label>
+        </div>
+
+        <div class="form-floating mb-1">
+            <input type="text" id="city" name="city" class="form-control" placeholder="City"
+            value="{{ user_form.city.value }}">
+            <label for="city">City</label>
+        </div>
+
+        <div class="form-floating mb-1">
+            <input type="text" id="biography" name="bio" class="form-control" placeholder="Biography"
+            value="{{ user_form.bio.value }}">
+            <label for="biography">Biography</label>
+        </div>
+
+        <div class="form-floating mb-1">
+            <input type="text" id="telegram" name="telegram" class="form-control" placeholder="Telegram username"
+            value="{{ user_form.telegram.value }}">
+            <label for="telegram">Telegram username</label>
+        </div>
+
+        <div class="form-floating mb-1">
+            <input type="text" id="instagram" name="instagram" class="form-control" placeholder="Instagram username"
+            value="{{ user_form.instagram.value }}">
+            <label for="instagram">Instagram username</label>
+        </div>  
+
+        <div class="form-floating mt-3">
+            <p class="text-center">Interests</p>
+        </div>
+
+        <div class="form-floating mb-1">
+            <div class="post-tags d-flex flex-wrap" style="margin-left: 0; margin-bottom: 10px">
+                <select name="tags" multiple style="width: 100%; height: 300px">
+                    {% for tag in tags %}
+                    <option value="{{tag.id}}">{{tag.name}}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+        </div>
+
+        <div class="form-floating mt-3">
+            <p class="text-center">Custom tags</p>
+        </div>
+
+        <div class="form-floating mb-1">
+            <textarea type="text" name="custom_tags" class="form-control" placeholder="Separate tags with '', '"></textarea>
+        </div>
+              <!-- <button class="post-tag tag-sports-and-athletics href=#">🏀Basketball</button>
+              <button class="post-tag tag-sports-and-athletics href=#">⚽Football</button>
+              <button class="post-tag tag-travel-and-adventure href=#">⛺Hiking</button>
+              <button class="post-tag tag-home-and-lifestyle  href=#">🍛Baking</button>
+              <button class="post-tag tag-nutrition-and-diet href=#">🍏Proper Nutrition</button>
+              <button class="post-tag tag-sports-and-athletics href=#">🏂Snowboard</button>
+              <button class="post-tag tag-home-and-lifestyle href=#">📑Read Books</button>
+              <button class="post-tag tag-career-ana-professional-development href=#">💻Frilance</button>
+              <button class="post-tag tag-sports-and-athletics href=#">🏊Swimming</button>
+              <button class="post-tag tag-career-ana-professional-development href=#">🚙Driver</button>
+              <button class="post-tag tag-arts-and-culture href=#">🎬Films</button>
+              <button class="post-tag tag-home-and-lifestyle href=#">🎸Heavy metal</button>
+              <button class="post-tag tag-nutrition-and-diet href=#">📜Author</button>
+              <button class="post-tag tag-arts-and-culture href=#">📷Photo</button>
+              <button class="post-tag tag-arts-and-culture href=#">🎧Music</button>
+              <button class="post-tag tag-sports-and-athletics href=#">🏃‍Run</button>
+              <button class="post-tag tag-food-and-cooking href=#">☕Cofe</button>
+              <button class="post-tag tag-home-and-lifestyle href=#">💤Sleep</button>
+              <button class="post-tag tag-sports-and-athletics href=#">🎾Tennis</button>
+              <button class="post-tag tag-career-ana-professional-development href=#">🎤Singer</button>
+              <button class="post-tag tag-home-and-lifestyle href=#">🏠Homebody</button>
+              <button class="post-tag tag-health-and-wellness href=#">🌅Nature</button>
+              <button class="post-tag tag-food-and-cooking href=#">🍴Cooking</button>
+              <button class="post-tag tag-travel-and-adventure href=#">🏰Museum</button>
+              <button class="post-tag tag-travel-and-adventure href=#">🏬Shooping</button>
+              <button class="post-tag tag-food-and-cooking href=#">🍷Bad habits</button>
+              <button class="post-tag tag-gaming-and-entertainment href=#">📺Gamer</button>
+              <button class="post-tag tag-travel-and-adventure href=#">🗻Mountains</button>
+              <button class="post-tag tag-travel-and-adventure href=#">🎲Casino</button> -->
+
+        <div class="form-floating mb-1 border" style="margin-top: 15px">
+            <span>
+                <label class="align-middle p-1" for="avatar">Your photo</label>
+               <input type="file" name="avatar" id="avatar" accept="image/*">
+            </span>
+        </div>
+
+        <div class="col d-flex justify-content-center mt-3" >
+          <button type="submit" class="btn btn-primary btn-block mb-2">Create new account</button>
+        </div>
+
+      </form>
+    </section>
+</section>
+{% endblock content %}
+
+##

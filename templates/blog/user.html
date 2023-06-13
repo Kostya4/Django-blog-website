@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+  <div class="container" style="margin-top:50px;">
+    <div class="main-body">
+      <div class="row gutters-sm">
+        <div class="col-md-4 mb-3">
+          <div class="card border-0">
+            <div class="card-body ">
+              <div class="d-flex flex-column align-items-center text-center">
+                <div style="position: relative;">
+                  <img src="{{ other_user.avatar.url }}" alt="{{other_user.username}}" class="rounded-circle" width="230" height="230">
+                  {% if other_user.is_verified %}
+                  <img src="{% static 'verified.png' %}" style="width: 40px; height: 40px; z-index: 10; position: absolute; bottom: 0; right: 21px">
+                  {% endif %}
+                </div>
+
+                <div class="mt-3">
+                  <h4>{{other_user.first_name}} {{other_user.last_name}}</h4>
+                  <p class="text-muted font-size-sm">@{{other_user.username}}</p>
+                  {% if other_user.country or user.city %}
+                    <p ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                      <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+                      {{other_user.country}} {{other_user.city}}
+                    </p>
+                  {% endif %}
+                  <h4>
+                    <a href="{% url 'user-followers' other_user.id %}"><span class="badge text-bg-dark">Followers<br>{{other_user.followers_count}}</span></a>
+                    <a href="{% url 'user-follows' other_user.id %}"><span class="badge text-bg-dark">Following<br>{{ other_user.follows_count }}</span></a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+           {% if other_user.bio %}
+          <div class="mb-4">
+
+          <div class="card p-3 text-end">
+            <figure class="mb-0">
+              <blockquote class="blockquote">
+                <p>"{{other_user.bio}}"</p>
+              </blockquote>
+              <figcaption class="blockquote-footer mb-0 text-muted">
+                <cite title="Source Title">{{other_user.first_name}} {{other_user.last_name}}</cite>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+          {% endif %}
+          <div class="card mt-3">
+            <ul class="list-group list-group-flush">
+              <a href="mailto:{{other_user.email}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>&nbsp Email</h6>
+                <span class="text-secondary">{{other_user.email}}</span>
+              </li>
+                </a>
+              {% if other_user.instagram %}
+                <a href="https://www.instagram.com/{{other_user.instagram}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>&nbsp Instagram</h6>
+                    <span class="text-secondary">{{other_user.instagram}}</span>
+                  </li>
+                </a>
+              {% endif %}
+              {% if other_user.telegram %}
+                <a href="https://t.me/{{other_user.telegram}}" target="_blank" rel="noopener noreferrer" style="text-decoration: none;">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-telegram mr-2" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/></svg>&nbsp Telegram</h6>
+                    <span class="text-secondary">{{other_user.telegram}}</span>
+                  </li>
+                </a>
+              {% endif %}
+            </ul>
+          </div>
+
+          {% if other_user.tags.all %}
+          <div style=" margin-top: 15px; padding: 5px; text-align: center; border-radius: 5px;" class="border">
+            <div style="padding: 3px 10px 3px 6px;" class="text-start">
+              <svg width="30" height="30" id="Capa_1" enable-background="new 0 0 511.999 511.999" viewBox="0 0 511.999 511.999" xmlns="http://www.w3.org/2000/svg"><g><path d="m348.473 289.055h-61.649c-5.522 0-10 4.478-10 10v110.472c0 11.482-9.342 20.824-20.824 20.824s-20.824-9.342-20.824-20.824v-110.472c0-5.522-4.478-10-10-10h-61.649c-5.522 0-10 4.478-10 10v110.472c0 56.504 45.97 102.473 102.474 102.473s102.474-45.969 102.474-102.473v-110.472c-.002-5.523-4.479-10-10.002-10zm-10 20v35.235h-41.649v-35.235zm-123.298 0v35.235h-41.649v-35.235zm40.825 182.944c-45.477 0-82.474-36.997-82.474-82.473v-45.236h41.649v45.236c0 22.511 18.313 40.824 40.824 40.824s40.824-18.313 40.824-40.824v-45.236h41.649v45.236c.001 45.476-36.996 82.473-82.472 82.473z"/><path d="m169.394 259.279h173.211c5.522 0 10-4.478 10-10v-14.384c0-29.438-16.09-56.248-41.193-70.453 13.468-13.9 21.768-32.835 21.768-53.672v-50.533c0-33.215-27.022-60.237-60.238-60.237h-33.697c-33.319 0-60.426 27.106-60.426 60.426v50.345c0 20.837 8.3 39.772 21.768 53.672-25.103 14.205-41.193 41.015-41.193 70.453v14.384c0 5.522 4.478 9.999 10 9.999zm163.211-24.383v4.384h-66.605v-51.973c9.943-1.292 19.299-4.484 27.689-9.198 23.361 9.12 38.916 31.687 38.916 56.787zm-93.36-214.896h33.697c22.188 0 40.238 18.051 40.238 40.237v16.296h-35.338c-12.553 0-22.765-10.212-22.765-22.765 0-5.522-4.478-10-10-10s-10 4.478-10 10c0 12.553-10.212 22.765-22.764 22.765h-13.495v-16.107c.001-22.291 18.136-40.426 40.427-40.426zm-40.426 76.533h13.495c13.139 0 24.913-5.957 32.764-15.311 7.852 9.354 19.626 15.311 32.765 15.311h35.338v14.237c0 31.529-25.651 57.181-57.181 57.181s-57.181-25.651-57.181-57.181zm-19.425 138.363c0-25.099 15.555-47.667 38.917-56.788 8.39 4.714 17.745 7.906 27.689 9.198v51.973h-66.605v-4.383z"/><path d="m137.5 119.64h-28.645c-5.522 0-10 4.478-10 10s4.478 10 10 10h28.645c5.522 0 10-4.478 10-10s-4.477-10-10-10z"/><path d="m133.115 160.674-28.427 13.033c-5.021 2.302-7.224 8.237-4.922 13.258 1.683 3.67 5.307 5.835 9.096 5.835 1.395 0 2.812-.294 4.162-.913l28.427-13.033c5.021-2.302 7.224-8.237 4.922-13.258s-8.238-7.223-13.258-4.922z"/><path d="m104.689 85.572 28.427 13.032c1.35.619 2.767.913 4.161.913 3.789 0 7.414-2.165 9.096-5.836 2.302-5.02.098-10.956-4.923-13.257l-28.427-13.032c-5.017-2.301-10.956-.1-13.257 4.923-2.302 5.02-.098 10.956 4.923 13.257z"/><path d="m374.499 139.64h28.645c5.522 0 10-4.478 10-10s-4.478-10-10-10h-28.645c-5.522 0-10 4.478-10 10s4.477 10 10 10z"/><path d="m407.311 173.707-28.426-13.033c-5.021-2.301-10.956-.099-13.258 4.922s-.099 10.956 4.922 13.258l28.426 13.033c1.351.619 2.768.913 4.162.913 3.789 0 7.413-2.165 9.096-5.835 2.302-5.021.099-10.956-4.922-13.258z"/><path d="m374.723 99.518c1.395 0 2.812-.294 4.162-.913l28.426-13.032c5.02-2.302 7.224-8.237 4.922-13.258s-8.237-7.223-13.258-4.922l-28.426 13.032c-5.02 2.302-7.224 8.237-4.922 13.258 1.683 3.67 5.307 5.835 9.096 5.835z"/></g></svg>
+              <p style="display: inline-block; padding-left: 10px">My interests</p>
+            </div>
+              {% for tag in other_user.tags.all %}
+                  <div style="display: inline-flex; margin: 2px auto" class="post-tag tag-{{tag.category.get_classname}}">
+                    {{tag}}
+                  </div>
+                {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="col-md-8">
+          <div class="bg-body rounded" style="max-width:750px;margin: 0 auto;">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#posts-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Posts ({{posts.count}})</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#likes-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Likes ({{posts_likes.count}})</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#comments-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Comments ({{user_comments.count}})</button>
+              </li>
+              {% if other_user == user %}
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#block-list-tab-pane" type="button" role="tab" aria-controls="block-list-tab-pane" aria-selected="false">Blocked users ({{other_user.black_list.count}})</button>
+              </li>
+              {% endif %}
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="posts-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                {% include 'blog/get_all_posts.html' %}
+              </div>
+              <div class="tab-pane fade" id="likes-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                {% include 'blog/get_all_posts.html' with posts=posts_likes %}
+              </div>
+              <div class="tab-pane fade" id="comments-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                {% for comment in user_comments %}
+                  <div class="post-wrap">
+                    <div class="d-flex gap-3 py-2">
+                      <a href="{{ comment.user.get_user_url }}"><img src="{{ comment.user.avatar.url }}" alt="" class="avatar_commentator"></a>
+                      <div class="flex-grow-1 justify-content-between">
+                        <div class="post-header-info">
+                          <a href="{{ comment.user.get_user_url }}" class="link-dark">{{comment.user.first_name}} {{comment.user.last_name}}</a>&nbsp;
+                          <p style="display: inline-block">{{ comment.created|timesince }} ago</p>
+                          <p> responding to <a href="{{ comment.post.user.get_user_url }}" class="link-dark">{{comment.post.user.username}}'s</a> <a href="{{ comment.post.get_post_url }}">post</a> </p>
+                          <div class="list-group-item bg-body-tertiary rounded">
+                            <p style="text-align:justify; font-size:14px;margin:5px 0px 10px;color:#000000;">{{comment.content}}</p>
+                            <span class="position-absolute top-100 start-100 translate-middle rounded-pill btn-sm bg-light border border-1">
+                              <form action="{{comment.get_likecomment_url}}" method="post">
+                                <div class="d-flex justify-content-center align-items-center gap-1">
+                                  {% csrf_token %}
+                                    <button type="submit" class="like-button">
+                                      {% if user not in comment.likes.all %}
+                                         <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                      {% else %}
+                                         <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#EA4858" stroke="#EA4858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                      {% endif %}
+                                    </button>
+                                    <div class="likes-count">{{comment.likes_count}}</div>
+                                </div>
+                              </form>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-end flex-column">
+                      {% if user == comment.user or user == post.user %}
+                        <form action="{% url 'comment-delete' %}" method="post">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-outline-danger btn-sm" >Delete</button>
+                          <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                        </form>
+                      {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              {% if other_user == user %}
+              <div class="tab-pane fade" id="block-list-tab-pane" role="tabpanel" aria-labelledby="block-list-tab" tabindex="0">
+                {% include 'blog/get_users.html' with users=other_user.black_list.all %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

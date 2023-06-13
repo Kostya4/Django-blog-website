@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+  <div class="container justify-content-center" style="margin-top:50px;">
+    <div class="bg-body rounded" style="max-width:750px;margin: 0 auto;">
+      <div class="d-md-flex border-bottom">
+        <div class="col-md-6 d-flex">
+          <h5 class="d-flex pb-2 mb-0">
+            {% if title %} {{title}} {% else %} ALL POSTS {% endif %}</h5>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+        <div class="dropdown">
+          <button class="btn border-0 btn-sm disabled">
+            Sort by:
+          </button>
+          <button class="btn bg-white dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Categories
+          </button>
+          <ul class="dropdown-menu" style="height: 150px; overflow-y: scroll;">
+            {% for category in categories %}
+              <a class="dropdown-item" href="{{category.get_category_url}}">{{category.name}}</a>
+            {% endfor %}
+          </ul>
+          <button class="btn bg-white dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tags
+          </button>
+          <ul class="dropdown-menu" style="height: 150px; overflow-y: scroll;">
+            {% if user.is_authenticated %}
+              {% for tag in user.get_all_tags %}
+              <a class="dropdown-item" href="{% url 'search-by-tag' tag.id %}">{{tag.name}}</a>
+              {% endfor %}
+            {% else %}
+              {% for tag in user_tags %}
+              <a class="dropdown-item" href="{% url 'search-by-tag' tag.id %}">{{tag.name}}</a>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      </div>
+      {% include 'blog/paginator.html' %}
+      {% include 'blog/get_all_posts.html' %}
+      {% include 'blog/paginator.html' %}
+    </div>
+
+  </div>
+</main>
+
+
+{% endblock %}
+
+{% block title %}
+{{title}} All posts
+{% endblock %}

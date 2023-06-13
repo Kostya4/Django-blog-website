@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="post-wrap border-0">
+    <p style="Margin:0px 0px 0px 60px; font-size:22px;"> {{caption}}</p>
+    {% if count == 1 %}
+      <p style="Margin:0px 0px 0px 60px; font-size:14px;"> {{count}} result </p>
+    {% endif %}
+    {% if count > 1 %}
+      <p style="Margin:0px 0px 0px 60px; font-size:14px;"> {{count}} results </p>
+    {% endif %}
+  </div>
+
+  {% include 'blog/get_all_posts.html' %}
+{% endblock %}

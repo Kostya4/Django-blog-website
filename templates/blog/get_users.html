@@ -1,0 +1,32 @@
+<main>
+  <div class="container justify-content-center" style="margin-top:50px;">
+    <div class="bg-body rounded" style="max-width:750px;margin: 0 auto;">
+      <h5 class="border-bottom pb-2 mb-0">{{title}}</h5>
+      {% for sug_user in users %}
+        <div class="post-wrap suggestions">
+          <div class="d-flex">
+            <a href="{{ sug_user.get_user_url }}">
+              <img src="{{ sug_user.avatar.url }}" alt="" class="avatar-suggestions">
+            </a>
+            <div class="flex-grow-1 suggestions-header-info">
+              <a href="{{ sug_user.get_user_url }}" class="link-dark">{{sug_user.first_name}} {{sug_user.last_name}}</a>
+              <p style="display: inline-block">@{{ sug_user.username }}</p>
+              <a href="{% url 'user-followers' sug_user.id %}" class="link-dark" style="text-decoration: none;"><p style="font-size:14px;"> {{sug_user.followers_count}} followers</p></a>
+            </div>
+            <form action="{{ sug_user.get_blocked_user_url }}" method="POST">
+                {% csrf_token %}
+                <div>
+                  {% if sug_user != user %}
+                    {% if sug_user in user.black_list.all %}
+                      <button type="submit" class="btn btn-outline-dark rounded-pill button-follow"> Unblock </button>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</main>

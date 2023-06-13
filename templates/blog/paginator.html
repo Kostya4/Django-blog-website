@@ -1,0 +1,31 @@
+{% if page_list|length > 1 %}
+<div class="pagination">
+    <div class="step-links">
+       {% if posts.number < 5 %}
+            {% if posts.has_previous %}
+                <a href="?page={{posts.previous_page_number}}" class="pagination-button">&#8592; Previous page</a>
+            {% endif %}
+            {% for i in page_list %}
+                {% if i <= 5 %}
+                    <a href="?page={{i}}"><div class="pagination-pagenumber {% if i == posts.number %}current-page{% endif %}"><span>{{i}}</span></div></a>
+                {% endif %}
+            {% endfor %}
+            {% if posts.has_next %}
+                 <a href="?page={{posts.next_page_number}}" class="pagination-button"> Next page &#8594;</a>
+            {% endif %}
+        {% else %}
+            {% if posts.has_previous %}
+                <a href="?page={{posts.previous_page_number}}" class="pagination-button">&#8592; Previous page</a>
+            {% endif %}
+            <a href="?page=1" class="pagination-pagenumber">1</a>
+            <span class="pagination-pagenumber">...</span>
+            {% for i in big_page_list %}
+                <a href="?page={{i}}"><div class="pagination-pagenumber {% if i == posts.number %}current-page{% endif %}"><span>{{i}}</span></div></a>
+            {% endfor %}
+            {% if posts.has_next %}
+                 <a href="?page={{posts.next_page_number}}" class="pagination-button"> Next page &#8594;</a>
+            {% endif %}
+       {% endif %}
+    </div>
+</div>
+{% endif %}

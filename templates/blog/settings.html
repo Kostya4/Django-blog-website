@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load socialaccount %}
+
+{% load static %}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'main.js' %}"></script>
+
+{% block content %}
+<div class="text-center">
+    <div class="container" style="margin-top: 10%; width: 40vh;">
+        {% if user.is_verified %}
+        <p>You already verified!</p>
+        {% else %}
+        <p>Please, buy verification to your account for $4.99! <button onclick="getSession()" class="btn btn-success">Purchase now</button></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
